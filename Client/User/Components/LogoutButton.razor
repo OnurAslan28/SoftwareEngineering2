@@ -1,0 +1,17 @@
+@using StudyMate.Client.AppShell
+@using StudyMate.Client.User.Services
+@inject AppState State
+@inject IUserApi Api
+@inject NavigationManager Nav
+
+<button @onclick="DoLogout" class="btn-dark"><span class="oi oi-power-standby"></span>Logout</button>
+
+@code {
+
+	private async Task DoLogout()
+	{
+		await Api.Logout();
+		await State.SetLoggedOut();
+        Nav.NavigateTo("/");
+	}
+}

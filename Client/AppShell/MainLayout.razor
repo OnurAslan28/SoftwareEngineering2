@@ -1,0 +1,46 @@
+@using StudyMate.Shared.Services
+@inherits LayoutComponentBase
+@inject AppState State
+@inject NavigationManager Nav
+@inject IImageService ImageService
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4 align-content-end">
+            @if (State.CurrentUser is null)
+            {
+                <button class="my-btn-primary" @onclick="GoToLogin">Login</button>
+            }
+            else
+            {
+	            <details style="height: 4rem">
+		            <summary class="h-100">
+			            <img src="@ImageService.ImageSourcePath(State.CurrentUser.ProfilePicture)" class="rounded-circle h-100"/>
+		            </summary>
+		            <StudyMate.Client.User.Components.LogoutButton />
+	            </details>
+            }
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+@code {
+	protected override void OnInitialized()
+	{
+		State.LoginChanged += StateHasChanged;
+		base.OnInitialized();
+	}
+
+	private void GoToLogin()
+    {
+        Nav.NavigateTo("/login");
+    }
+}

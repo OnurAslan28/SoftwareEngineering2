@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: study-mate
+  namespace: study-mate
+  labels:
+    service: study-mate
+spec:
+  selector:
+    matchLabels:
+      service: study-mate
+  template:
+    metadata:
+      labels:
+        service: study-mate
+    spec:
+      containers:
+        - image: git.haw-hamburg.de:5005/gruppe-1-4ever/software-engineering-ii/team-2/study-mate
+          name: study-mate
+          ports:
+            - containerPort: 80
+              protocol: TCP
+            - containerPort: 443
+              protocol: TCP
+      imagePullSecrets:
+        - name: studymate-deployer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: study-mate
+  namespace: study-mate
+  labels:
+    service: study-mate
+spec:
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 80
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: 443
+  selector:
+    service: study-mate
+  type: ClusterIP

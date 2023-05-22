@@ -1,0 +1,12 @@
+.post {
+    border: 2px solid black;
+    margin: 2px 0px;
+    padding: 2px 5px;
+}
+
+.post-content {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 2.4em;
+}

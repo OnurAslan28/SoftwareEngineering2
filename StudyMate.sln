@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32407.343
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudyMate.Server", "Server\StudyMate.Server.csproj", "{A9750595-4E6F-446B-A649-E95329E93C73}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudyMate.Client", "Client\StudyMate.Client.csproj", "{D3943291-84B3-45AF-AAA7-A95622D0DFE7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudyMate.Shared", "Shared\StudyMate.Shared.csproj", "{5D830345-EF4F-4860-AD12-C294DC7CBF1F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{82D1A98C-571D-4B16-BE7A-F87CD33D8C98}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		.gitlab-ci.yml = .gitlab-ci.yml
+		architektur.drawio.png = architektur.drawio.png
+		deploy.yml = deploy.yml
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudyMate.Client.Test", "Client.Test\StudyMate.Client.Test.csproj", "{A8B44287-6102-4048-9B4E-10CC3B3C7AB5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudyMate.Data", "Data\StudyMate.Data.csproj", "{B70E25A3-F131-4A08-BF13-672988D61C6B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A9750595-4E6F-446B-A649-E95329E93C73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9750595-4E6F-446B-A649-E95329E93C73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9750595-4E6F-446B-A649-E95329E93C73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9750595-4E6F-446B-A649-E95329E93C73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3943291-84B3-45AF-AAA7-A95622D0DFE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3943291-84B3-45AF-AAA7-A95622D0DFE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3943291-84B3-45AF-AAA7-A95622D0DFE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3943291-84B3-45AF-AAA7-A95622D0DFE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D830345-EF4F-4860-AD12-C294DC7CBF1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D830345-EF4F-4860-AD12-C294DC7CBF1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D830345-EF4F-4860-AD12-C294DC7CBF1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D830345-EF4F-4860-AD12-C294DC7CBF1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8B44287-6102-4048-9B4E-10CC3B3C7AB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8B44287-6102-4048-9B4E-10CC3B3C7AB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8B44287-6102-4048-9B4E-10CC3B3C7AB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8B44287-6102-4048-9B4E-10CC3B3C7AB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B70E25A3-F131-4A08-BF13-672988D61C6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B70E25A3-F131-4A08-BF13-672988D61C6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B70E25A3-F131-4A08-BF13-672988D61C6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B70E25A3-F131-4A08-BF13-672988D61C6B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {72BCF054-FFA7-4726-8EB3-6ADF74933209}
+	EndGlobalSection
+EndGlobal

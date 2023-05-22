@@ -1,0 +1,53 @@
+stages:
+  - build
+  - test
+  - package
+  - deploy
+
+Build Client:
+  stage: build
+  image: mcr.microsoft.com/dotnet/sdk:6.0
+  script:
+    - dotnet build ./Client/StudyMate.Client.csproj
+
+Build Server:
+  stage: build
+  image: mcr.microsoft.com/dotnet/sdk:6.0
+  script:
+    - dotnet build ./Server/StudyMate.Server.csproj
+
+Test Client:
+  stage: test
+  image: mcr.microsoft.com/dotnet/sdk:6.0
+  needs:
+    - Build Client
+  script:
+    - dotnet test ./Client.Test/StudyMate.Client.Test.csproj
+
+Package:
+  stage: package
+  only: [master]
+  image: docker:dind
+  services:
+    - docker:dind
+  tags:
+    - dind
+    - docker
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build -t git.haw-hamburg.de:5005/gruppe-1-4ever/software-engineering-ii/team-2/study-mate -f ./Server/Dockerfile .
+    - docker push git.haw-hamburg.de:5005/gruppe-1-4ever/software-engineering-ii/team-2/study-mate
+
+Deploy:
+  stage: deploy
+  only: [master]
+  needs:
+    - Package
+  image: $CI_REGISTRY/icc/kubectl:v1.19.10
+  script:
+    - kubectl apply -f deploy.yml
+    - kubectl -n study-mate rollout restart deployment/study-mate
+  environment:
+      name: Kubernetes
+      url: https://study-mate.informatik.haw-hamburg.de/
+      

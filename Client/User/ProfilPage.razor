@@ -1,0 +1,71 @@
+@inject Services.IUserApi Api
+@inject NavigationManager NavigationManager
+@using StudyMate.Client.AppShell
+@inject AppState State
+
+
+@page "/profile"
+
+<div class="margin-div"></div>
+
+<div class="form-container">
+	@if (State.CurrentUser is null)
+	{
+		<div class="spinner-border m-5" role="status">
+			<span class="visually-hidden">Loading...</span>
+		</div>
+	}
+	else
+	{
+		<div class="container form-container">
+
+			<EditForm Model="@State.CurrentUser" OnValidSubmit="OnValidSubmit">
+				<div class="inner-form-container">
+					<EditUser User="@State.CurrentUser" />
+					@if (UpdatedSuccessfully)
+					{
+						<div class="alert alert-success" role="alert">
+							Your changes were saved!
+						</div>
+					}
+				</div>
+				<div class="mt-4">
+					<button type="submit" class="float-end my-btn-primary">Save changes</button>
+					<button type="button" class="float-end my-btn-secondary me-2" @onclick="Reload">Cancel</button>
+				</div>
+			</EditForm>
+		</div>
+	}
+</div>
+
+@code {
+	public bool UpdatedSuccessfully { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		Console.WriteLine("Init Profilpage");
+
+		await State.InitTask;
+		if (State.CurrentUser is null) // not logged in
+		{
+			NavigationManager.NavigateTo("login");
+		}
+	}
+
+	private async Task OnValidSubmit()
+	{
+		try
+		{
+			await Api.UpdateAsync(State.CurrentUser!);
+			UpdatedSuccessfully = true;
+		}
+		catch (OperationCanceledException) { }
+		catch (Exception ex)
+		{
+			Console.WriteLine($"Das Speichern hat nicht funktioniert! Fehler: {ex}");
+		}
+	}
+
+	private void Reload() => NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+
+}

@@ -1,0 +1,136 @@
+@using Microsoft.AspNetCore.Components.Forms
+@using Shared.Services
+@using Shared.Models
+@using Client.AppShell
+@using Shared.Services.Implementations
+@using Microsoft.JSInterop
+@using SixLabors.ImageSharp
+@inject IJSRuntime JSRuntime
+@inject AppState State
+@inject IImageService ImageService
+
+
+<h3>Your Profile</h3>
+
+<EditForm Model="User">
+
+	<DataAnnotationsValidator />
+
+	<div class="row">
+		<div class="col-md-6">
+
+			<!-- Username -->
+			<div class="form-group">
+				<label for="username">Username</label>
+				<input class="form-control" id="username" type="text" placeholder="@User.Username" disabled>
+			</div>
+
+			<!-- Password -->
+			<div class="form-group">
+				<label for="password">Password</label>
+				<div>
+					<button type="button" id="password" class="my-btn-secondary mt-1"
+						@onclick="OpenPasswordChangeDialog">
+						Change password
+					</button>
+					@if (ChangedPassword)
+					{
+						<div class="alert alert-success mt-2" role="alert">
+							Your new password has been saved!
+						</div>
+					}
+				</div>
+			</div>
+
+		</div>
+		<div class="col">
+
+			<div class="d-flex justify-content-center my-2">
+
+				<img src="@ImagePath" class="rounded-circle" style="width:250px; height:250px;"
+					alt="userimage of @User.Username">
+			</div>
+
+			<div class="w-100 mb-2"></div>
+
+			<div class="d-flex justify-content-center">
+				@if (Loading)
+				{
+					<div class="spinner-border" role="status">
+						<span class="visually-hidden">Loading...</span>
+					</div>
+				}
+				<InputFile OnChange="ResizeAndDisplayImage" accept="image/jpeg, image/png" hidden=@Loading />
+			</div>
+
+
+		</div>
+
+		<!-- Bio -->
+		<div class="form-group">
+			<label for="bio">Bio</label>
+			<InputText class="form-control" id="bio" @bind-Value="User.BioInfo" autofocus=""
+				aria-describedby="bioHelperBlock" />
+			<small id="bioHelperBlock" class="form-text text-muted">
+				Tell us about yourself
+			</small>
+		</div>
+
+		<!-- CourseOfStudy -->
+		<div class="form-group">
+			<label for="course-of-study">Course of Study</label>
+			<InputText class="form-control" id="course-of-study" @bind-Value="User.CourseOfStudy" autocomplete="true"
+				autofocus="" />
+		</div>
+
+	</div>
+
+</EditForm>
+
+@if (ShowPasswordChangeModal)
+{
+	<PasswordChangeModal Username="@User.Username" OnClose="@OnPasswordChangeDialogClose" />
+}
+
+@code {
+	[Parameter]
+	public User User { get; set; } = null!;
+
+	private string ImagePath => ImageService.ImageSourcePath(User.ProfilePicture);
+
+	public bool ShowPasswordChangeModal { get; set; }
+	public bool ChangedPassword { get; set; }
+	private bool Loading { get; set; }
+
+	protected override void OnInitialized()
+	{
+		Console.WriteLine("Init EditUser");
+		base.OnInitialized();
+	}
+
+	private void OpenPasswordChangeDialog()
+	{
+		ShowPasswordChangeModal = true;
+		StateHasChanged();
+	}
+
+	private void OnPasswordChangeDialogClose(bool accepted)
+	{
+		ChangedPassword = accepted;
+		ShowPasswordChangeModal = false;
+		StateHasChanged();
+	}
+
+	private async Task ResizeAndDisplayImage(InputFileChangeEventArgs e)
+	{
+		Loading = true;
+		var imageFile = e.File;
+		var resizedImage = await imageFile.RequestImageFileAsync(imageFile.ContentType, 250, 250);
+		using var image = await Image.LoadAsync(resizedImage.OpenReadStream());
+
+		User.ProfilePicture = ImageService.ImageToByteArray(image);
+
+		Loading = false;
+		StateHasChanged();
+	}
+}

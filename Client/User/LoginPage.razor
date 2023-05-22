@@ -1,0 +1,44 @@
+@page "/login"
+@inject NavigationManager Nav
+
+<div class="margin-div"></div>
+
+<div class="form-container">
+	@if (!ShowRegistrationForm)
+	{
+		<div class="inner-form-container">
+			<LoginForm OnLoggedIn="@OnLoggedIn"/>
+		</div>
+		<button class="btn-link btn-switch" @onclick="SwitchForms">Don't have an account yet?</button>
+	}
+	else
+	{
+		<div class="inner-form-container">
+			<RegistrationForm OnRegistered="OnRegistered" OnLoggedIn="@OnLoggedIn"/>
+		</div>
+		<button class="btn-link btn-switch" @onclick="SwitchForms">Already have an account?</button>
+	}
+	<div>@Message</div>
+</div>
+
+@code {
+    private bool ShowRegistrationForm { get; set; }
+    private string Message { get; set; } = "";
+
+    private void SwitchForms()
+    {
+        ShowRegistrationForm = !ShowRegistrationForm;
+    }
+
+    private void OnLoggedIn()
+    {
+        Nav.NavigateTo("/");
+    }
+
+	private void OnRegistered()
+	{
+		Message = "Registration successful, you can now log in using those credentials.";
+		ShowRegistrationForm = false;
+	}
+
+}

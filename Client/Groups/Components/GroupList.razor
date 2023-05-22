@@ -1,0 +1,35 @@
+@using StudyMate.Client.Groups.Services
+@inject IGroupApi Api
+
+<div class="groups">
+    @if (Groups != null)
+    {
+        @if (!Groups.Any())
+        {
+            <h5>No open groups so far...</h5>
+        }
+        @foreach (var group in Groups)
+        {
+            <div class="card mb-2">
+                <div class="card-body group">
+                    <p>
+                        @foreach (var tag in group.Tags)
+                        {
+                            <span class="badge badge-primary bg-primary me-1">@tag</span>
+                        }
+                    </p>
+                    <h5 class="card-title">@group.Name (@group.Members.Count() / @group.Capacity)</h5>
+                    <p>
+                        @foreach (var user in group.Members)
+                        {
+                            <span class="member me-1">@user.Username</span>
+                        }
+                    </p>
+                    <p class="card-text">Eine Beschreibung was wir in der Gruppe machen wollen</p>
+                    <a href="#" class="btn btn-primary">Gruppe beitreten</a>
+                </div>
+            </div>
+        }
+    }
+</div>
+

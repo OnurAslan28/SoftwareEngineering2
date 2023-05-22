@@ -1,0 +1,71 @@
+@using Microsoft.AspNetCore.Components.Forms
+@using StudyMate.Client.AppShell
+@using StudyMate.Client.User.Services
+@using StudyMate.Shared.User.Models
+@inject AppState State
+@inject IUserApi Api
+
+<h3>Registration</h3>
+<EditForm Model="@RegistrationData" OnValidSubmit="Register">
+	<DataAnnotationsValidator/>
+
+	<div class="form-group">
+		<label for="username">Username:</label>
+		<InputText class="form-control" id="username" autocomplete="true" autofocus="" placeholder="Username" @bind-Value="@RegistrationData.Username"/>
+		<div>
+			<ValidationMessage TValue="string" For="() => RegistrationData.Username"/>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="password">Password:</label>
+		<InputText class="form-control" id="password" type="password" autocomplete="false" placeholder="Password" @bind-Value="@RegistrationData.Password"/>
+		<div>
+			<ValidationMessage TValue="string" For="() => RegistrationData.Password"/>
+		</div>
+	</div>
+
+	<button type="submit" class="my-btn-primary">Register</button>
+	<InputCheckbox id="stay" @bind-Value="RegistrationData.AutoLogin"/> <label for="stay">Automatically log in on successful registration?</label>
+	<div class="text-danger">@Error</div>
+</EditForm>
+
+@code {
+	private RegistrationRequest RegistrationData { get; set; } = new();
+	private string Error { get; set; } = "";
+
+	[Parameter]
+	public Action? OnRegistered { get; set; }
+
+	[Parameter]
+	public Action? OnLoggedIn { get; set; }
+
+	private async void Register()
+	{
+		try
+		{
+			var result = await Api.Register(RegistrationData);
+			if (result.Success)
+			{
+				if (result.Token.HasValue)
+				{
+					await State.SetLoggedIn(result.UserData!, result.Token.Value, true);
+					OnLoggedIn?.Invoke();
+				}
+				else
+				{
+					OnRegistered?.Invoke();
+				}
+			}
+			else
+			{
+				Error = result.ErrorMessage!;
+			}
+		}
+		catch (Exception exc)
+		{
+			Error = exc.Message;
+		}
+	}
+
+}

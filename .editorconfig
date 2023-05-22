@@ -1,0 +1,103 @@
+[*]
+charset=utf-8
+trim_trailing_whitespace=true
+dotnet_style_operator_placement_when_wrapping = beginning_of_line
+tab_width = 4
+indent_style = tab
+indent_size = 4
+end_of_line = crlf
+dotnet_style_coalesce_expression = true:suggestion
+dotnet_style_null_propagation = true:suggestion
+dotnet_style_prefer_is_null_check_over_reference_equality_method = true:suggestion
+dotnet_style_prefer_auto_properties = true:silent
+dotnet_style_object_initializer = true:suggestion
+dotnet_style_collection_initializer = true:suggestion
+dotnet_style_prefer_simplified_boolean_expressions = true:suggestion
+dotnet_style_prefer_conditional_expression_over_assignment = true:warning
+dotnet_style_prefer_conditional_expression_over_return = true:warning
+dotnet_style_explicit_tuple_names = true:suggestion
+dotnet_style_prefer_inferred_tuple_names = true:suggestion
+dotnet_style_prefer_inferred_anonymous_type_member_names = true:suggestion
+dotnet_style_prefer_compound_assignment = true:warning
+dotnet_style_prefer_simplified_interpolation = true:suggestion
+dotnet_style_namespace_match_folder = true:suggestion
+
+[*.md]
+trim_trailing_whitespace=false
+
+[*.yml]
+indent_size=2
+indent_style = space
+
+[*.cs,*.razor]
+indent_size=4
+
+# Using directives
+
+dotnet_sort_system_directives_first=true
+
+# Naming
+
+dotnet_naming_style.camel_case_style.capitalization=camel_case
+dotnet_naming_style.pascal_case_style.capitalization=pascal_case
+
+## Classes
+
+dotnet_naming_symbols.classes.applicable_kinds=class, struct, enum
+dotnet_naming_rule.class_names.symbols=classes
+dotnet_naming_rule.class_names.style = pascal_case_style
+dotnet_naming_rule.class_names.severity = warning
+
+## Locals
+
+dotnet_naming_symbols.local_symbols.applicable_kinds=local, local_function
+dotnet_naming_rule.locals.symbols=local_symbols
+dotnet_naming_rule.locals.style = camel_case_style
+dotnet_naming_rule.locals.severity = warning
+
+## Interfaces
+
+dotnet_naming_style.interface_style.capitalization=pascal_case
+dotnet_naming_style.interface_style.required_prefix=I
+dotnet_naming_symbols.interfaces.applicable_kinds=interface
+dotnet_naming_rule.interface_names.symbols=interfaces
+dotnet_naming_rule.interface_names.style = interface_style
+dotnet_naming_rule.interface_names.severity = warning
+
+## Instanzvariablen internal/public
+
+dotnet_naming_symbols.internal_public_variables_symbols.applicable_kinds=field
+dotnet_naming_symbols.internal_public_variables_symbols.applicable_accessibilities=internal, public
+dotnet_naming_rule.internal_public_variables.symbols=internal_public_variables_symbols
+dotnet_naming_rule.internal_public_variables.style = pascal_case_style
+dotnet_naming_rule.internal_public_variables.severity = warning
+
+csharp_preferred_modifier_order=public, private, protected, internal, new, abstract, virtual, sealed, override, static, readonly, extern, unsafe, volatile, async:suggestion
+dotnet_style_predefined_type_for_locals_parameters_members=true:suggestion
+dotnet_style_predefined_type_for_member_access=true:suggestion
+dotnet_style_require_accessibility_modifiers=for_non_interface_members:suggestion
+csharp_space_after_cast = false:warning
+
+# IDE0058: Expression value is never used
+dotnet_diagnostic.IDE0058.severity = none
+csharp_style_unused_value_expression_statement_preference = discard_variable:none
+
+# IDE0045: Convert to conditional expression
+dotnet_diagnostic.IDE0045.severity = suggestion
+csharp_indent_labels = one_less_than_current
+csharp_using_directive_placement = inside_namespace:warning
+csharp_prefer_simple_using_statement = true:suggestion
+csharp_prefer_braces = true:silent
+csharp_style_namespace_declarations = file_scoped:silent
+csharp_style_expression_bodied_methods = false:silent
+csharp_style_expression_bodied_constructors = false:silent
+csharp_style_expression_bodied_operators = false:silent
+csharp_style_expression_bodied_properties = true:silent
+csharp_style_expression_bodied_indexers = true:silent
+csharp_style_expression_bodied_accessors = true:silent
+csharp_style_expression_bodied_lambdas = true:warning
+csharp_style_expression_bodied_local_functions = when_on_single_line:silent
+csharp_style_throw_expression = true:suggestion
+csharp_style_prefer_null_check_over_type_check = true:suggestion
+csharp_prefer_simple_default_expression = true:warning
+csharp_space_around_binary_operators = before_and_after

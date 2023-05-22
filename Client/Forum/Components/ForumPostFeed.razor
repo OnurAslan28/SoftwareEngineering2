@@ -1,0 +1,19 @@
+@using StudyMate.Client.Forum.Services
+@inject IForumApi Api
+
+@if(Posts != null)
+{
+    @if (!Posts.Any())
+    {
+        <h5>No posts so far...</h5>
+    }
+    @foreach (var post in Posts)
+    {
+        <div class="post">
+            <h5>@post.Title</h5>
+            <div class="post-content">
+                @post.Content
+            </div>
+        </div>
+    }
+}
